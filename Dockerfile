@@ -1,20 +1,20 @@
-# Use Node.js 14 LTS image as base
+# Use the official Node.js image as the base image
 FROM node:14
 
-# Set working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json files into the container
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code into the container
 COPY . .
 
-# Expose the port your app runs on
+# Expose the port on which your Express.js application runs
 EXPOSE 3000
 
-# Command to run your app
+# Command to run your Express.js application
 CMD ["node", "app.js"]
