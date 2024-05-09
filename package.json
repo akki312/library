@@ -1,0 +1,16 @@
+{
+    "name": "library-management-system",
+    "version": "1.0.0",
+    "description": "Library Management System with MongoDB and Docker",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js"
+    },
+    "author": "akshith",
+    "license": "MIT",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongodb": "^4.0.0"
+    }
+  }
+  
