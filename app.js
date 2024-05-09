@@ -1,10 +1,55 @@
 const { MongoClient } = require('mongodb');
 const express = require('express');
 
+
 const app = express();
 
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 const dbName = 'movieTickets';
+const axios = require('axios');
+
+// Define the base URL of your API
+const baseURL = 'http://localhost:3000'; // Adjust the URL based on your API's actual URL
+
+// Function to retrieve all books from the API
+async function getAllBooks() {
+    try {
+        const response = await axios.get(`${baseURL}/books`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching books:', error.message);
+        return null;
+    }
+}
+
+// Function to add a new book using the API
+async function addBook(bookData) {
+    try {
+        const response = await axios.post(`${baseURL}/books`, bookData);
+        console.log('Book added successfully:', response.data);
+    } catch (error) {
+        console.error('Error adding book:', error.message);
+    }
+}
+
+// Example usage
+async function main() {
+    // Fetch all books
+    const books = await getAllBooks();
+    console.log('All Books:', books);
+
+    // Add a new book
+    const newBook = {
+        title: 'New Book',
+        author: 'John Doe',
+        category: 'Fiction'
+    };
+    await addBook(newBook);
+}
+
+// Run the main function
+main();
+
 
 async function connectDatabase() {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
