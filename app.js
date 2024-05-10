@@ -1,18 +1,13 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
-const axios = require('axios');
-const bookapi = require('../library/routes/index');
-const bookinfo = require('../library/models/usersModel');
 
 const app = express();
 
+const bookapi = require('../library/routes/index');
+const bookinfo = require('../library/models/usersModel');
+
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 const dbName = 'movieTickets';
-const baseURL = 'http://localhost:3000';
-
-
-
-
 
 async function connectDatabase() {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -27,7 +22,7 @@ async function connectDatabase() {
 
 app.use(express.json());
 
-app.get('usermodel', async (req, res) => {
+app.get('/usermodel', async (req, res) => {
     const booksCollection = await connectDatabase();
     if (booksCollection) {
         try {
@@ -71,7 +66,7 @@ async function displayBooks() {
     }
 }
 
-async function bookTicket(bookId, categoryName, selectedSeat, couponCode) {
+async function bookTicket(bookId, selectedSeat) {
     const booksCollection = await connectDatabase();
     if (booksCollection) {
         try {
@@ -85,14 +80,10 @@ async function bookTicket(bookId, categoryName, selectedSeat, couponCode) {
                 console.log('Category not found');
                 return;
             }
-            if (category.book[selectedbook] !== 'available') {
-                console.log(`Seat ${selectedbook} in category ${categoryName} is already booked`);
+            if (category.book[selectedSeat] !== 'available') {
+                console.log(`Seat ${selectedSeat} in category ${categoryName} is already booked`);
                 return;
             }
-
-            let totalPrice = category.price; // Initialize total price with standard price
-
-            
 
             // Update takenDate
             const takenDate = new Date();
@@ -103,7 +94,7 @@ async function bookTicket(bookId, categoryName, selectedSeat, couponCode) {
                 { id: bookId, 'bookCollection.category': categoryName },
                 { $set: { 'bookCollection.$.seats': category.seats, 'bookCollection.$.takenDate': takenDate } }
             );
-            console.log(`Successfully booked seat ${selectedSeat} in category ${categoryName} for ${book.title}. Total price: $${totalPrice}`);
+            console.log(`Successfully booked seat ${selectedSeat} in category ${categoryName} for ${book.title}`);
         } catch (error) {
             console.error('Error booking ticket:', error);
         }
@@ -116,49 +107,43 @@ async function runExample() {
             id: 1,
             title: 'The Avengers',
             bookCollection: [
-                { author: 'J.K. Rowling', available: 50, taken: 0,  },
-                
+                { author: 'J.K. Rowling', available: 50, taken: 0 },
             ]
         },
         {
             id: 2,
             title: 'The Shawshank Redemption',
             bookCollection: [
-                { author: 'J.K. Rowling',  available: 30, taken: 0,  },
-              
+                { author: 'J.K. Rowling', available: 30, taken: 0 },
             ]
         },
         {
             id: 3,
             title: 'The Godfather',
             bookCollection: [
-                { author: 'J.K. Rowling',  available: 40, taken: 0,  },
-                
+                { author: 'J.K. Rowling', available: 40, taken: 0 },
             ]
         },
         {
             id: 4,
             title: 'Something',
             bookCollection: [
-                { author: 'J.K. Rowling',  available: 40, taken: 0 },
-                
+                { author: 'J.K. Rowling', available: 40, taken: 0 },
             ]
         },
         {
             id: 5,
             title: 'That Thing',
             bookCollection: [
-                { author: 'J.K. Rowling',  available: 40, taken: 0 },
-               
+                { author: 'J.K. Rowling', available: 40, taken: 0 },
             ]
         }
     ];
 
     await initializeBooksCollection(booksData);
     await displayBooks();
-    await bookTicket(1, 2);
+    await bookTicket(1, 10);
     await displayBooks();
-  
 }
 
 runExample();
