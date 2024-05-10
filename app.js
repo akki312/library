@@ -1,13 +1,31 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const axios = require('axios');
-
+const bookapi = require('../library/routes/index');
+const bookinfo = require('../library/models/usersModel');
 
 const app = express();
 
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 const dbName = 'movieTickets';
 const baseURL = 'http://localhost:3000';
+
+
+const axios = require('axios');
+
+async function makeHttpRequest() {
+    try {
+        const response = await axios.get('http://localhost:3000/endpoint');
+        console.log(response.data);
+        const postData = { key: 'value' };
+        const postResponse = await axios.post('http://localhost:3000/endpoint', postData);
+        console.log(postResponse.data);
+    } catch (error) {
+        console.error('Error making HTTP request:', error.message);
+    }
+}
+makeHttpRequest();
+
 
 async function connectDatabase() {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
