@@ -105,13 +105,7 @@ async function bookTicket(bookId, categoryName, selectedSeat, couponCode) {
 
             let totalPrice = category.price; // Initialize total price with standard price
 
-            // Apply coupon code logic
-            if (couponCode === 'HALFOFF') {
-                totalPrice /= 2; // Apply 50% discount
-            } else if (couponCode === 'FREEMOVIE') {
-                // Apply free movie logic
-                // Adjust totalPrice and other logic accordingly
-            }
+            
 
             // Update takenDate
             const takenDate = new Date();
@@ -175,7 +169,8 @@ async function runExample() {
 
     await initializeBooksCollection(booksData);
     await displayBooks();
-    await bookTicket(1,  10, 'HALFOFF');
+    await bookTicket(1, 2);
+    await displayBooks();
   
 }
 
