@@ -11,20 +11,7 @@ const dbName = 'movieTickets';
 const baseURL = 'http://localhost:3000';
 
 
-const axios = require('axios');
 
-async function makeHttpRequest() {
-    try {
-        const response = await axios.get('http://localhost:3000/endpoint');
-        console.log(response.data);
-        const postData = { key: 'value' };
-        const postResponse = await axios.post('http://localhost:3000/endpoint', postData);
-        console.log(postResponse.data);
-    } catch (error) {
-        console.error('Error making HTTP request:', error.message);
-    }
-}
-makeHttpRequest();
 
 
 async function connectDatabase() {
@@ -40,7 +27,7 @@ async function connectDatabase() {
 
 app.use(express.json());
 
-app.get('/books', async (req, res) => {
+app.get('usermodel', async (req, res) => {
     const booksCollection = await connectDatabase();
     if (booksCollection) {
         try {
@@ -98,8 +85,8 @@ async function bookTicket(bookId, categoryName, selectedSeat, couponCode) {
                 console.log('Category not found');
                 return;
             }
-            if (category.seats[selectedSeat] !== 'available') {
-                console.log(`Seat ${selectedSeat} in category ${categoryName} is already booked`);
+            if (category.book[selectedbook] !== 'available') {
+                console.log(`Seat ${selectedbook} in category ${categoryName} is already booked`);
                 return;
             }
 
