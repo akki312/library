@@ -1,55 +1,13 @@
-const { MongoClient } = require('mongodb');
 const express = require('express');
+const { MongoClient } = require('mongodb');
+const axios = require('axios');
 
 
 const app = express();
 
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 const dbName = 'movieTickets';
-const axios = require('axios');
-
-// Define the base URL of your API
-const baseURL = 'http://localhost:3000'; // Adjust the URL based on your API's actual URL
-
-// Function to retrieve all books from the API
-async function getAllBooks() {
-    try {
-        const response = await axios.get(`${baseURL}/books`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching books:', error.message);
-        return null;
-    }
-}
-
-// Function to add a new book using the API
-async function addBook(bookData) {
-    try {
-        const response = await axios.post(`${baseURL}/books`, bookData);
-        console.log('Book added successfully:', response.data);
-    } catch (error) {
-        console.error('Error adding book:', error.message);
-    }
-}
-
-// Example usage
-async function main() {
-    // Fetch all books
-    const books = await getAllBooks();
-    console.log('All Books:', books);
-
-    // Add a new book
-    const newBook = {
-        title: 'New Book',
-        author: 'John Doe',
-        category: 'Fiction'
-    };
-    await addBook(newBook);
-}
-
-// Run the main function
-main();
-
+const baseURL = 'http://localhost:3000';
 
 async function connectDatabase() {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -61,6 +19,8 @@ async function connectDatabase() {
         console.error('Error connecting to the database:', error);
     }
 }
+
+app.use(express.json());
 
 app.get('/books', async (req, res) => {
     const booksCollection = await connectDatabase();
@@ -157,54 +117,48 @@ async function runExample() {
             id: 1,
             title: 'The Avengers',
             bookCollection: [
-                { author: 'J.K. Rowling', category: 'VIP', available: 50, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Standard', available: 100, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Economy', available: 150, taken: 0 }
+                { author: 'J.K. Rowling', available: 50, taken: 0,  },
+                
             ]
         },
         {
             id: 2,
             title: 'The Shawshank Redemption',
             bookCollection: [
-                { author: 'J.K. Rowling', category: 'VIP', available: 30, taken: 0, price: 30 },
-                { author: 'J.K. Rowling', category: 'Standard', available: 80, taken: 0, price: 20 },
-                { author: 'J.K. Rowling', category: 'Economy', available: 120, taken: 0, price: 10 }
+                { author: 'J.K. Rowling',  available: 30, taken: 0,  },
+              
             ]
         },
         {
             id: 3,
             title: 'The Godfather',
             bookCollection: [
-                { author: 'J.K. Rowling', category: 'VIP', available: 40, taken: 0, price: 400 },
-                { author: 'J.K. Rowling', category: 'Standard', available: 90, taken: 0, price: 200 },
-                { author: 'J.K. Rowling', category: 'Economy', available: 140, taken: 0, price: 300 }
+                { author: 'J.K. Rowling',  available: 40, taken: 0,  },
+                
             ]
         },
         {
             id: 4,
             title: 'Something',
             bookCollection: [
-                { author: 'J.K. Rowling', category: 'VIP', available: 40, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Standard', available: 90, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Economy', available: 140, taken: 0 }
+                { author: 'J.K. Rowling',  available: 40, taken: 0 },
+                
             ]
         },
         {
             id: 5,
             title: 'That Thing',
             bookCollection: [
-                { author: 'J.K. Rowling', category: 'VIP', available: 40, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Standard', available: 90, taken: 0 },
-                { author: 'J.K. Rowling', category: 'Economy', available: 140, taken: 0 }
+                { author: 'J.K. Rowling',  available: 40, taken: 0 },
+               
             ]
         }
     ];
 
     await initializeBooksCollection(booksData);
     await displayBooks();
-    await bookTicket(1, 'VIP', 10, 'HALFOFF');
-    await bookTicket(1, 'Standard', 11);
-    await bookTicket(1, 'Economy', 12);
+    await bookTicket(1,  10, 'HALFOFF');
+  
 }
 
 runExample();
