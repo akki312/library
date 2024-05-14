@@ -110,12 +110,12 @@ async function checkoutBook(memberId, bookId) {
 
 
 async function runExample() {
-  await initializeBooksCollection();
-  await displayBooks();
+  await initializeBooksCollection(); // Wait for books to be initialized
+  await displayBooks(); // Display the updated books data
   await checkoutBook(1, 1); // Example transaction: Member with ID 1 checks out Book with ID 1
-  await displayBooks();
-  
+  await displayBooks(); // Display the updated books data after checkout
 }
+
 
 runExample();
 
