@@ -22,6 +22,13 @@ async function connectDatabase() {
   }
 }
 
+
+connectDatabase().then(() => {
+  console.log('Database connected successfully.');
+}).catch((error) => {
+  console.error('Failed to connect to the database:', error);
+});
+
 app.use(express.json());
 
 app.get('/books', async (req, res) => {

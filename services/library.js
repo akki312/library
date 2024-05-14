@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
 const app = express();
 
 
-const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
+const uri = 'mongodb://mymongo:27017/libraryapi';
 const dbName = 'libraryManagement';
 
 async function connectDatabase() {
