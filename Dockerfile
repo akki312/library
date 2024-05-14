@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run your Express.js application
-CMD ["node", "app.js"]
+CMD ["node", "library.js"]
