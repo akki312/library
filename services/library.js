@@ -2,7 +2,6 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const bookapi = require('../library/routes/index');
 const bookinfo = require('../library/models/usersModel');
 
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
@@ -37,6 +36,7 @@ const booksData = [
     author: 'Author 2',
     ISBN: '987654321',
     availability: true
+    
   },
   
 ];
@@ -60,15 +60,27 @@ async function displayBooks() {
   if (books) {
     try {
       const allBooks = await books.find({}).toArray();
+      let availableBooks = 0;
+      let takenBooks = 0;
+
       console.log('Available Books:');
       allBooks.forEach(book => {
         console.log(`${book.id}. ${book.title} by ${book.author}: ${book.availability ? 'Available' : 'Not Available'}`);
+        if (book.availability) {
+          availableBooks++;
+        } else {
+          takenBooks++;
+        }
       });
+
+      console.log(`Total Available Books: ${availableBooks}`);
+      console.log(`Total Taken Books: ${takenBooks}`);
     } catch (error) {
       console.error('Error fetching books from database:', error);
     }
   }
 }
+
 
 async function checkoutBook(memberId, bookId) {
   const { books, members, transactions } = await connectDatabase();
