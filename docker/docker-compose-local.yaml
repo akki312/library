@@ -15,7 +15,7 @@ services:
         condition: on-failure
     hostname: libraryapi
     volumes:
-      - /home/akshith/projects/library/
+      - /home/akshith/library
     depends_on:
       - mymongo
     ports:
