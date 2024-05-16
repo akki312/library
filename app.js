@@ -1,6 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
-const { initializeBooksCollection, displayBooks, checkoutBook } = require('./library');
+// const { initializeBooksCollection, displayBooks, checkoutBook } = require('./library');
 
 const app = express();
 
@@ -32,13 +32,13 @@ connectDatabase().then(() => {
 app.use(express.json());
 
 app.get('/books', async (req, res) => {
-  await displayBooks();
+  // await displayBooks();
   res.send('Books displayed in console.');
 });
 
 app.post('/checkout', async (req, res) => {
   const { memberId, bookId } = req.body;
-  await checkoutBook(memberId, bookId);
+  // await checkoutBook(memberId, bookId);
   res.send('Book checked out.');
 });
 
