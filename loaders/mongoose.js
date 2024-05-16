@@ -1,8 +1,8 @@
 // Imports:
 const mongoose = require("mongoose");
 //require("mongoose-uuid2")(mongoose);
-const CONFIG = require("./dotenv");
-const logger = require("./logger");
+/*const CONFIG = require("./dotenv");
+const logger = require("./logger");*/
 
 /*async function connectDatabase() {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });

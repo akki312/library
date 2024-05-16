@@ -6,6 +6,7 @@ const app = express();
 
 const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 const dbName = 'libraryManagement';
+const {connectDatabase} = require('../loaders/mongoose');
 
 async function connectDatabase() {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
