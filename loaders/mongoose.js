@@ -4,29 +4,34 @@ const mongoose = require("mongoose");
 const CONFIG = require("./dotenv");
 // const logger = require("./logger");
 
-/*async function connectDatabase() {
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    try {
-        await client.connect();
-        const db = client.db(dbName);
-        return db.collection('books');
-    } catch (error) {
-        console.error('Error connecting to the database:', error);
-    }
-}*/
 
-mongoose.connect(
-  process.env.MONGODB_CONNECTIONSTRING || CONFIG.MONGODB_CONNECTIONSTRING,
-  {
+function makeNewConnection(uri) {
+  const db = mongoose.createConnection(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }
-);
+  });
 
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("mongoDB connected");
-});
+  db.on("error", function (error) {
+    console.log(`MongoDB :: connection ${this.name} ${JSON.stringify(error)}`);
+    db.close().catch(() =>
+      console.log(`MongoDB :: failed to close connection ${this.name}`)
+    );
+  });
+  db.on("connected", function () {
+    console.log(`MongoDB :: connected ${this.name}`);
+  });
+  return db;
+}
+mongoose.db1 = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
+
+
+
 
 module.exports = mongoose;
+
+
+
+
+
+
+
