@@ -5,24 +5,20 @@ const CONFIG = require("./dotenv");
 // const logger = require("./logger");
 
 
-function makeNewConnection(uri) {
-  const db = mongoose.createConnection(uri, {
+mongoose.connect(
+  process.env.MONGODB_CONNECTIONSTRING || CONFIG.MONGODB_CONNECTIONSTRING,
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  });
+  }
+);
 
-  db.on("error", function (error) {
-    console.log(`MongoDB :: connection ${this.name} ${JSON.stringify(error)}`);
-    db.close().catch(() =>
-      console.log(`MongoDB :: failed to close connection ${this.name}`)
-    );
-  });
-  db.on("connected", function () {
-    console.log(`MongoDB :: connected ${this.name}`);
-  });
-  return db;
-}
-mongoose.db1 = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.info("mongoDB connected");
+});
+// mongoose.db = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
 
 
 
