@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 //require("mongoose-uuid2")(mongoose);
 const CONFIG = require("./dotenv");
+const logger = require("./logger");
 // const logger = require("./logger");
 
 
@@ -16,7 +17,7 @@ mongoose.connect(
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
-  console.info("mongoDB connected");
+  logger.info("mongoDB connected");
 });
 // mongoose.db = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
 

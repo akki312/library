@@ -1,4 +1,5 @@
 const bookModel = require("../models/book")
+const logger = require("../loaders/logger")
 
 async function createBooks(data) {
   try {
@@ -6,7 +7,6 @@ async function createBooks(data) {
     let newBook = await new bookModel(data);
     let dbResponse = await newBook.save();
     console.log(dbResponse);
-    logger.info("inserting new books to the collection")
     return true;
   } catch (err) {
     logger.error("Error: " + err);
