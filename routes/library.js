@@ -7,7 +7,7 @@ const routes = (module.exports = require("express")());
 
 routes.post("/insertBooks", async function (req, res, next) {
 try{
-    console.log("into routes=======")
+    console.log(req.body,"into routes=======")
     logger.info("into routes----------")
     let data = await libraryService.createBooks(req.body);
     res.status(200).send(data);

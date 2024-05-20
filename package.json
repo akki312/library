@@ -27,6 +27,7 @@
     "express": "^4.19.2",
     "mongodb": "^6.6.2",
     "mongoose": "^8.3.5",
+    "nodemon": "^3.1.0",
     "winston": "^3.13.0",
     "winston-mongodb": "^5.1.1"
   }
