@@ -4,6 +4,10 @@ const { MongoClient } = require('mongodb');
 const handleAsyncExceptions = require("./loaders/handleError");
 const logger = require('./loaders/logger');
 const routes = require('./routes');
+const bodyParser = require('body-parser');
+
+
+app.use(bodyParser.json());
 
 async function run(){
   try{
