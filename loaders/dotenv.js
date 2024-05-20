@@ -1,4 +1,5 @@
-let dotenv = require('dotenv')
+let dotenv = require('dotenv').config();
+
 
 const CONFIG = dotenv.config({ path: "" + (process.cwd(), ".env") + "" });
 if (CONFIG.error) {
