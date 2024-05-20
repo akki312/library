@@ -1,33 +1,37 @@
-// mongoose.js
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const logger = require('./logger');
+// Imports:
+const mongoose = require("mongoose");
+//require("mongoose-uuid2")(mongoose);
+const CONFIG = require("./dotenv");
+const logger = require("./logger");
+// const logger = require("./logger");
 
-dotenv.config();
 
-const uri = process.env.MONGODB_CONNECTIONSTRING;
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      connectTimeoutMS: 30000,  // 30 seconds
-      socketTimeoutMS: 45000    // 45 seconds
-    });
-    logger.info('MongoDB connected');
-  } catch (err) {
-    logger.error('MongoDB connection error:', err);
-    process.exit(1);  // Exit process with failure
+//const uri = 'mongodb://localhost:27017/'//
+mongoose.connect(
+  process.env.MONGODB_CONNECTIONSTRING || CONFIG.MONGODB_CONNECTIONSTRING,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    connectTimeoutMS: 30000,  // 30 seconds
+    socketTimeoutMS: 45000 
   }
-};
+);
 
-mongoose.connection.on('error', (err) => {
-  logger.error('Mongoose connection error:', err);
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  logger.info("mongoDB connected");
 });
+// mongoose.db = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
 
-mongoose.connection.on('disconnected', () => {
-  logger.warn('Mongoose disconnected');
-});
 
-module.exports = connectDB;
+
+
+module.exports = mongoose;
+
+
+
+
+
+
+
