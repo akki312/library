@@ -1,5 +1,6 @@
 const app = require('./loaders/express');
 const { MongoClient } = require('mongodb');
+const mongoose = require("./loaders/mongoose")
 // const CONFIG = require("./dotenv")
 const handleAsyncExceptions = require("./loaders/handleError");
 const logger = require('./loaders/logger');

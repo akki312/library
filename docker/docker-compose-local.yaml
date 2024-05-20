@@ -17,7 +17,7 @@ services:
     environment:
       - EXPRESS_PORT = 3000
       - EXPRESS_HOST = 0.0.0.0
-      - MONGODB_CONNECTIONSTRING = mongodb://localhost:27017/library
+      - MONGODB_CONNECTIONSTRING = mongodb://localhost:27017/librarydata
     volumes:
       - /home/akshith/library
     depends_on:

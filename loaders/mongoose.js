@@ -5,17 +5,29 @@ const CONFIG = require("./dotenv");
 const logger = require("./logger");
 // const logger = require("./logger");
 
+//const uri = process.env.MONGODB_URI;//
 
 //const uri = 'mongodb://localhost:27017/'//
-mongoose.connect(
+/*mongoose.connect(
   process.env.MONGODB_CONNECTIONSTRING || CONFIG.MONGODB_CONNECTIONSTRING,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    connectTimeoutMS: 30000,  // 30 seconds
+    connectTimeoutMS: 30000,  
     socketTimeoutMS: 45000 
   }
-);
+);*/
+
+const uri = process.env.MONGODB_URI || CONFIG.MONGODB_CONNECTIONSTRING;
+console.log('MongoDB URI:', uri);
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  connectTimeoutMS: 30000,  
+  socketTimeoutMS: 45000 
+});
+
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -24,14 +36,4 @@ db.once("open", function () {
 });
 // mongoose.db = makeNewConnection(process.env.MONGODB_CONNECTIONSTRING);
 
-
-
-
 module.exports = mongoose;
-
-
-
-
-
-
-
