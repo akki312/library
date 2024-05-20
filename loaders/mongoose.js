@@ -5,7 +5,7 @@ const CONFIG = require("./dotenv");
 const logger = require("./logger");
 // const logger = require("./logger");
 
-
+const uri = 'mongodb+srv://akshithsistla:ccipnWsoxp5NQ0nm@cluster0.iljkeyx.mongodb.net/';
 mongoose.connect(
   process.env.MONGODB_CONNECTIONSTRING || CONFIG.MONGODB_CONNECTIONSTRING,
   {
