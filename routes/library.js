@@ -17,4 +17,4 @@ try{
     await sendResponse(err, res);
 }
 });
-module.exports = router;
+module.exports = routes;

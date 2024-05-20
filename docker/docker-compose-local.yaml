@@ -20,8 +20,10 @@ services:
       - MONGODB_CONNECTIONSTRING = mongodb://localhost:27017/librarydata
     volumes:
       - /home/akshith/library
+      - /home/akshith/library/node_modules
     depends_on:
       - mymongo
     ports:
       - 3000:3000
+    command: nodemon app.js
 
